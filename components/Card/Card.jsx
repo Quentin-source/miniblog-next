@@ -5,11 +5,15 @@ import Link from "next/link";
 import styles from "./Card.module.scss";
 import propTypes from "prop-types";
 
-const Card = ({ title, content, more, url, className }) => {
+const Card = (props) => {
+  const { title, image, content, more, url, className } = props;
   return (
     <div className={`${styles.main} ${className}`}>
-      <div className={styles.title}>{title}</div>
-      <div className={styles.content}>{content}</div>
+      <header>
+        {props.children}
+        <h1 className={styles.title}>{title}</h1>
+      </header>
+      <p className={styles.content}>{content}</p>
       <div className={styles.more}>
         {
           <Link href={url}>
@@ -30,3 +34,5 @@ Card.propTypes = {
 };
 
 export default Card;
+
+//{ title, image, content, more, url, className}

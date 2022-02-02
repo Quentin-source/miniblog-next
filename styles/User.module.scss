@@ -11,8 +11,8 @@
 }
 
 .card {
-  width: 250px;
-  height: 150px;
+  width: 300px;
+  height: 300px;
   margin: 1em;
 
   p {
@@ -21,5 +21,13 @@
 
   h1 {
     font-size: 0.9em;
+  }
+
+  header{
+      display: flex;
+  }
+  h1{
+      flex-grow: 1;
+      text-align: right;
   }
 }
