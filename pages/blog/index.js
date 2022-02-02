@@ -2,12 +2,14 @@
 import Head from "next/head";
 
 //Components
-import Card from "../components/Card/Card";
+import Card from "../../components/Card/Card.jsx";
 
 //Styles
-import styles from "../styles/Home.module.scss";
+import styles from "../../styles/Blog.module.scss";
 
-export default function Home() {
+export default function Blog(props) {
+    console.log(props.posts);
+    
   return (
     <div className={styles.container}>
       <Head>
@@ -39,3 +41,14 @@ export default function Home() {
     </div>
   );
 }
+
+export async function getStaticProps() {
+    const data = await fetch("http://localhost/wp-server/wp-json/wp/v2/posts");
+    const posts = await data.json();
+    return {
+      props: {
+        posts,
+      },
+    };
+  }
+  
