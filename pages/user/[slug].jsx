@@ -1,5 +1,6 @@
 //Setup
 import Head from "next/head";
+import Image from "next/image";
 
 //Libraries
 import { v4 as uuidv4 } from "uuid";
@@ -8,16 +9,16 @@ import { v4 as uuidv4 } from "uuid";
 import Card from "../../components/Card/Card.jsx";
 
 //Styles
-import styles from "../../styles/Post.module.scss";
+import styles from "../../styles/User.module.scss";
 
 export default function Post(props) {
   console.log(props);
-  const { post, slug } = props;
+  const { user, slug } = props;
 
   return (
     <>
       <Head>
-        <title>Mini Blog Next.js | {slug}</title>
+        <title>Mini Blog Next.js | User | {slug}</title>
         <meta
           name="description"
           content="Just a little blog for Web Developper"
@@ -27,17 +28,25 @@ export default function Post(props) {
       <div className={styles.container}>
         <header>
           <h1 className={styles.title}>Bienvenue sur code.io</h1>
-          <p>Le blog communautaire des afficionados de dévelopement Web</p>
+          <p>{"Détails d'un utilisateur"}</p>
         </header>
         <main className={styles.main}>
           <Card
             key={uuidv4()}
             className={styles.card}
-            content={`${post[0].excerpt.rendered.replace(/<[^>]*>/g, "")}`}
-            title={`${post[0].title.rendered.replace(/<[^>]*>/g, "")}`}
+            content={`${user[0].description}`}
+            title={`${user[0].name}`}
             more="Retour"
-            url="/blog"
-          />
+            url="/user"
+          >
+                <Image
+                    src={`https://via.placeholder.com/150x150/000000/FFFFFF?text=${user[0].name}+avatar`}
+                    height="150"
+                    width="150"
+                    layout="fixed"
+                    alt="User avatar"
+                  />
+          </Card>
         </main>
       </div>
     </>
@@ -45,7 +54,7 @@ export default function Post(props) {
 }
 
 export async function getStaticPaths() {
-  const datas = await fetch(`http://localhost/wp-server/wp-json/wp/v2/posts`);
+  const datas = await fetch(`http://localhost/wp-server/wp-json/wp/v2/users`);
   const results = await datas.json();
   const paths = results.map((path) => ({
     params: { slug: path.slug },
@@ -60,12 +69,12 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
   const slug = context.params.slug;
   const data = await fetch(
-    `http://localhost/wp-server/wp-json/wp/v2/posts?slug=${slug}`
+    `http://localhost/wp-server/wp-json/wp/v2/users?slug=${slug}`
   );
-  const post = await data.json();
+  const user = await data.json();
   return {
     props: {
-      post,
+      user,
       slug,
     },
   };

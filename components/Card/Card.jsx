@@ -5,8 +5,7 @@ import Link from "next/link";
 import styles from "./Card.module.scss";
 import propTypes from "prop-types";
 
-const Card = (props) => {
-  const { title, image, content, more, url, className } = props;
+const Card = ({ title, content, more, url, className, ...props }) => {
   return (
     <div className={`${styles.main} ${className}`}>
       <header>
